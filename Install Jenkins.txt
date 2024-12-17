@@ -15,10 +15,8 @@ EOF
 2. Install Temurin 17
 dnf -y install temurin-17-jdk
 
-
 Ref:
 https://adoptium.net/installation/linux/#_centosrhelfedora_instructions
-
 
 Install Jenkins 
 =======================================================================================
@@ -56,5 +54,3 @@ Validate systemd configuration:
 systemd-analyze verify jenkins.service
 systemctl daemon-reload
 systemctl restart jenkins
-
-
