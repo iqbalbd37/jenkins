@@ -1,0 +1,60 @@
+Install Jenkins manually on Redhat or Fedora 
+===========================================================================
+Install Terminal JDK
+
+1. Create RPM repository
+cat <<EOF > /etc/yum.repos.d/adoptium.repo
+[Adoptium]
+name=Adoptium
+baseurl=https://packages.adoptium.net/artifactory/rpm/${DISTRIBUTION_NAME:-$(. /etc/os-release; echo $ID)}/\$releasever/\$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://packages.adoptium.net/artifactory/api/gpg/key/public
+EOF
+
+2. Install Temurin 17
+dnf -y install temurin-17-jdk
+
+
+Ref:
+https://adoptium.net/installation/linux/#_centosrhelfedora_instructions
+
+
+Install Jenkins 
+=======================================================================================
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+yum install Jenkins
+
+Ref:
+https://pkg.jenkins.io/redhat-stable/
+
+Configure Jenkins
+=======================================================================================
+systemctl start Jenkins
+systemctl stop jenkins
+systemctl edit Jenkins [Add this following two lines]
+----------------------------------------------------------------------------------------
+[Service]
+Environment="JAVA_OPTS=-Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Djava.io.tmpdir=/var/cache/jenkins/tmp/ -Dorg.apache.commons.jelly.tags.fmt.timeZone=Asia/Dhaka -Duser.timezone=Asia/Dhaka"
+Environment="JENKINS_OPTS=--pluginroot=/var/cache/jenkins/plugins"
+----------------------------------------------------------------------------------------
+mkdir -p /var/cache/jenkins/tmp
+chown -R jenkins:jenkins /var/cache/jenkins/tmp
+systemctl show jenkins
+systemd-analyze verify jenkins.service
+systemctl start Jenkins
+systemctl --full status Jenkins
+journalctl -u Jenkins
+
+Ref:
+https://gist.github.com/darinpope/ebf2773f8a1fce0fca56f0bb67e243df
+https://www.youtube.com/watch?v=uSi17DYLjG8
+
+Validate systemd configuration:
+=======================================================================================
+systemd-analyze verify jenkins.service
+systemctl daemon-reload
+systemctl restart jenkins
+
+
