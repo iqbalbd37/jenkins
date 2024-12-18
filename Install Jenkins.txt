@@ -58,3 +58,13 @@ systemctl restart jenkins
 jenkins initial password info 
 =======================================================================================
 cat /var/lib/jenkins/secrets/initialAdminPassword
+
+Assign default port for jenkins 
+=======================================================================================
+vim /etc/default/jenkins
+
+Bypass proxy for jenkins
+=======================================================================================
+vim /etc/sysconfig/jenkins
+
+
