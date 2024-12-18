@@ -1,4 +1,4 @@
-Install Jenkins manually on Redhat or Fedora 
+Install jenkins manually on Redhat or Fedora 
 ===========================================================================
 Install Terminal JDK
 
@@ -18,32 +18,32 @@ dnf -y install temurin-17-jdk
 Ref:
 https://adoptium.net/installation/linux/#_centosrhelfedora_instructions
 
-Install Jenkins 
+Install jenkins 
 =======================================================================================
 sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
 sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
-yum install Jenkins
+yum install jenkins
 
 Ref:
 https://pkg.jenkins.io/redhat-stable/
 
-Configure Jenkins
+Configure jenkins
 =======================================================================================
-systemctl start Jenkins
+systemctl start jenkins
 systemctl stop jenkins
-systemctl edit Jenkins [Add this following two lines]
+systemctl edit jenkins [Add this following two lines]
 ----------------------------------------------------------------------------------------
 [Service]
 Environment="JAVA_OPTS=-Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Djava.io.tmpdir=/var/cache/jenkins/tmp/ -Dorg.apache.commons.jelly.tags.fmt.timeZone=Asia/Dhaka -Duser.timezone=Asia/Dhaka"
-Environment="JENKINS_OPTS=--pluginroot=/var/cache/jenkins/plugins"
+Environment="jenkins_OPTS=--pluginroot=/var/cache/jenkins/plugins"
 ----------------------------------------------------------------------------------------
 mkdir -p /var/cache/jenkins/tmp
 chown -R jenkins:jenkins /var/cache/jenkins/tmp
 systemctl show jenkins
 systemd-analyze verify jenkins.service
-systemctl start Jenkins
-systemctl --full status Jenkins
-journalctl -u Jenkins
+systemctl start jenkins
+systemctl --full status jenkins
+journalctl -u jenkins
 
 Ref:
 https://gist.github.com/darinpope/ebf2773f8a1fce0fca56f0bb67e243df
