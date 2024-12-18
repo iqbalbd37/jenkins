@@ -54,3 +54,7 @@ Validate systemd configuration:
 systemd-analyze verify jenkins.service
 systemctl daemon-reload
 systemctl restart jenkins
+
+jenkins initial password info 
+=======================================================================================
+cat /var/lib/jenkins/secrets/initialAdminPassword
